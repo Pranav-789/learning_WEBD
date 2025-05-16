@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="card-container">
+      <div class="content">
+        Nike green shoes blend style and performance with a vibrant, energetic
+        look. Designed for comfort and durability, they feature breathable
+        materials, cushioned soles, and sleek aesthetics. Ideal for workouts or
+        casual wear, these shoes make a bold statement while supporting your
+        every step with trusted Nike innovation and quality. <i class="fa-solid fa-circle-info cancel"></i>
+      </div>
+
+      <div class="non-det">
+        <img src="../images/card_im1.jpeg" alt="" />
+
+        <div class="details">
+          <div class="headings">
+            <h3>Nike Venom</h3>
+            <i class="fa-solid fa-circle-info info"></i>
+          </div>
+          <h4>1200$</h4>
+          <div class="btn-container">
+            <button>Buy now</button>
+            <button>
+              Add to cart <i class="fa-solid fa-cart-shopping"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+        document.querySelector('.info').addEventListener('click', function() {
+            document.querySelector('.non-det').style.display = 'none';
+        });
+
+        document.querySelector(".cancel").addEventListener("click", function() {
+            document.querySelector('.non-det').style.display = 'flex';        
+        })
+    </script>
+  </body>
+</html>
