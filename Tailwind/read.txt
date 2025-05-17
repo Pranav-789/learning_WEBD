@@ -1,0 +1,2 @@
+When opening this on any device 
+run npm install on terminal for the root folder
