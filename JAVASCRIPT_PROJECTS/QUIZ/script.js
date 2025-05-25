@@ -69,7 +69,21 @@ document.addEventListener("DOMContentLoaded", () => {
     questions[currentQuestionIndex].choices.forEach(choice => {
       const li = document.createElement('li');
       li.textContent = choice;
-      li.addEventListener('click', () => selectAnswer(choice)); //to not execute function immediately
+      // li.addEventListener('click', () => selectAnswer(choice)); //to not execute function immediately
+      li.addEventListener('click', () => {
+        const isCorrect = selectAnswer(choice);
+        
+        Array.from(choicesList.children).forEach((listItem) => {
+          listItem.style.pointerEvents = "none";
+        });
+
+        if(isCorrect){
+          li.style.backgroundColor = "green";
+        }
+        else{
+          li.style.backgroundColor = "red";
+        }
+      }); //to not execute function immediately
       choicesList.appendChild(li);
     })
   }
@@ -79,7 +93,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if(choice === correctAnswer){
       score++;
     }
-    nextBtn.classList.remove('hidden')
+    nextBtn.classList.remove('hidden');
+    return choice === correctAnswer;
   }
 
   function showResult() {
