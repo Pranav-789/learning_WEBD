@@ -1,0 +1,19 @@
+Checks
+|- (If the tab is active)
+
+If above condition are true then
+fetch url of the tab
+start a timer when the tab is opened
+timer tracks the time the tab was active
+
+Timer 
+|- Starts on when a url of a valid website is hit (Should not be search engine/ google)
+|- tracks the time it is active
+|- stops when tab is closed
+|- has three sections 
+    |- Active: (When user is on the tab)
+    |- Passive: When user is on other tab but this tab is not closed
+    |- background: When Chrome is minimized
+
+The data collected 
+|- will remove the background time

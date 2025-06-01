@@ -1,0 +1,276 @@
+Q1. How many active users are there?
+Ans.
+[
+  {
+    $match: {
+      isActive: true
+    }
+  },
+  {
+    $count: 'activeUsers'
+  }
+]
+
+Q2. What is the average of all user?
+Ans.
+[
+  {
+    $group: {
+      _id: null,
+      averageAge:{
+        $avg: "$age"
+      }
+    }
+  }
+]
+
+
+Q3. List top 5 common favorite fruit among the users?
+Ans.
+[
+  {
+    $group :{
+    	_id: "$favoriteFruit",
+      count: {
+    		$sum: 1
+    	}
+    }
+  },
+  {
+    $sort:{
+    	count: -1
+    }
+  },
+  {
+    $limit: 2
+  }
+]
+
+Q4. Find the total number of males and females
+Ans.
+[
+  {
+    $group:{
+      _id: "$gender",
+      genderCount:{
+        $sum: 1
+      }
+    }
+  }
+]
+
+Q5. Which Country has the highest number of registered users?
+Ans.
+[
+  {
+    $group: {
+      _id: "$company.location.country",
+      count: {
+        $sum: 1,
+      },
+    },
+  },
+  {
+    $sort: {
+      count: -1,
+    },
+  },
+  {
+    $limit: 1,
+  },
+]
+
+
+Q6. list down all unique eyeColors
+Ans.
+[
+  {
+    $group: {
+      _id: "$eyeColor",
+    },
+  },    
+]
+
+
+Q7. Average number of tags per user?
+tags is a direct property but an array, so each tag is element of the tags array
+Ans.
+[
+  {
+    $unwind: "$tags"
+  },
+  {
+    $group: {
+      _id: "$_id",
+      numberOfTags:{
+        $sum: 1
+      }
+    }
+  },
+  {
+    $group:{
+      _id: null,
+      averageTagPerUser: {$avg: "$numberOfTags"}
+    }
+  }
+]
+
+approach2:
+[
+  {
+    $addFields: {
+      numberOfTags: {
+        //$cond: {
+        //  if: { $isArray: "$tags" },
+        //  then: { $size: "$tags" },
+        //  else: 0
+        //}
+        $size : {$ifNull: ["tags", []]} //outdated use above commented part
+      }
+    }
+  },
+  {
+    $group: {
+      _id: null,
+      average: {
+        $avg: "$numberOfTags"
+      }
+    }
+  }
+]
+
+Q8. How many users have 'enim' as one of their tags
+Ans.
+[
+  {
+    $match:{
+      tags: 'enim',
+    }
+  },
+  {
+    $count: "UsersofEnim"
+  }
+]
+
+
+Q9. name and age of inactive user?
+[
+    {
+        $match:{
+            isActive: false,
+            tags: "velit"
+        }
+    },
+    {
+        $project:{
+            name: 1,
+            age: 1
+        }
+    }
+]
+
+Q10. How many users have phone number starting with '+1 (940)'?
+Ans.
+[
+    {
+        $match: {
+            "company.phone": /^\+1 \(940\)/
+        }
+    },
+    {
+        $count: 'usersWithSpecialPhoneNumber'
+    }
+]
+
+Q11. Who has registered most recently?
+[
+    {
+        $sort:{
+            registered: -1
+        }
+    },
+    {
+        $limit: 5
+    },
+    {
+        $project:{
+            name: 1,
+            registered: 1,
+            favoriteFruit: 1
+        }
+    }
+]
+
+Q12. Categorize users by their favoriteFruit
+[
+    {
+        $group:{
+            _id:"$favoriteFruit",
+            users:{
+                $push: "$name"
+            }
+        }
+    }
+]
+
+//push operators: appends a specified value to an Array
+
+Q13. How many users have 'ad as the secong tag in their list of tags?
+[
+    {
+        $match:{
+            "tags.1": "ad"
+        }
+    },
+    {
+        $count: "secondTagAd"
+    }
+]
+
+Q14. find users who have 'enim' and 'id' both in their tags?
+//$all operator: doc is selected if all all given comditions meet
+Ans.
+[
+    {
+        $match:{
+            tags: {$all: ['enim', 'id']}
+        }
+    }
+]
+
+Q15. List all the company located in USA with their user count
+Ans.
+[
+    {
+        $match: {
+            "company.location.country": "USA"
+        }
+    },
+    {
+        $group: {
+            _id: "$company.title",
+            userCount:{
+                $sum: 1
+            }
+        }
+    }
+]
+
+inside books
+[
+    {
+        $lookup:{
+            from: "authors",
+            localField: "author_id",
+            foreignField: "_id",
+            as: "author_details",
+        }
+    },
+    {
+        $addFields:{
+            author_details: {
+                $arrayElemAt: ["$author_details", 0]
+            }
+        }
+    }
+]
