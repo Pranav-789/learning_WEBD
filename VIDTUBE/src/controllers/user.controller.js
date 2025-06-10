@@ -157,7 +157,7 @@ const refreshAccessToken = asyncHandler( async(req, res) =>{
 
   if(!incomingRefreshToken){
     throw new ApiError(401, "Refresh token is required");
-  }
+  } 
 
   try {
     const decodedToken = jwt.verify(
