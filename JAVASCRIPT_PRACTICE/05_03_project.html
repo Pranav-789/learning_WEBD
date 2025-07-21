@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #74ebd5, #9face6);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+main {
+  width: 400px;
+  padding: 30px 20px;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: stretch;
+}
+label {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+input {
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+}
+select {
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+}
+button {
+  padding: 10px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+button:hover {
+  background-color: #388e3c;
+}
+div:last-of-type {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+    </style>
+  </head>
+  <body>
+    <main class="main">
+      <div>
+        <label for="string">Enter your string</label>
+        <input type="text" name="string" class="ipStr" />
+      </div>
+      <select name="options" id="operation">
+        <option value="validateEmail">Email validatiion</option>
+        <option value="capWords">Captialize words</option>
+        <option value="Reverse">Reverse</option>
+      </select>
+      <button class="runfunction">Submit</button>
+    </main>
+    <script>
+      function capitalizeSentence(str) {
+        const arr = str.split(" ");
+        let newArr = [];
+        for (let ele of arr) {
+          newArr.push(ele[0].toUpperCase() + ele.slice(1));
+        }
+        return newArr.join(" ");
+      }
+
+      function isValidEmail(email) {
+        if (email.includes("@") && email.includes(".")) {
+          if(email.indexOf("@") < email.indexOf(".")){
+            return true;
+          }
+          else{
+            return false;
+          }
+        }
+        return false;
+      }
+
+      function reverseWords(strs) {
+        return strs.split(" ").reverse().join(" ");
+      }
+
+      const submission = document.querySelector(".runfunction");
+      submission.addEventListener("click", () => {
+        const input = document.querySelector(".ipStr").value;
+        if (input.trim() === "") {
+          console.log("function did not run!");
+          return;
+        }
+        console.log(input);
+        const option = document.querySelector("#operation");
+        const selectedOption = option.value;
+        console.log(selectedOption);
+        let result;
+        switch(selectedOption){
+            case "validateEmail":
+                result = isValidEmail(input);
+                console.log(result);
+                break;
+            case "capWords":
+                result = capitalizeSentence(input);
+                console.log(result);
+                break;
+            case "Reverse":
+                result = reverseWords(input);
+                console.log(result);
+                break;
+            default:
+                console.log("Invalid Input");
+        }
+            const answerDiv = document.createElement('DIV');
+            answerDiv.innerText = result;
+            document.querySelector('.main').appendChild(answerDiv)
+        
+      });
+    </script>
+  </body>
+</html>
