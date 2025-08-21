@@ -1,5 +1,3 @@
-const { use } = require("react");
-
 const Person = {
     name: "Pranav",
     age: 19,
@@ -85,3 +83,26 @@ userProfile.details.preferences.language = "english";
 console.log(userProfile);
 console.log(userProfile?.details.hasOwnProperty("email"));
 
+const book = {
+  title: "Atomic Habits",
+  author: "James Clear",
+  pages: 320,
+};
+
+// Clone using Object.assign()
+const copiedBook1 = Object.assign({}, book);
+
+// Clone using spread
+const copiedBook2 = { ...book }; // both create shallow copy
+
+// Change in copiedBook1
+copiedBook1.pages = 350;
+
+console.log("Original:", book);        // Still 320 ✅
+console.log("Copied (assign):", copiedBook1); // Changed to 350 ✅
+
+console.log("Same object?", book === copiedBook1); // false ✅
+console.log(
+  "Same content?",
+  JSON.stringify(book) === JSON.stringify(copiedBook1)
+); // false (pages changed) ❗
